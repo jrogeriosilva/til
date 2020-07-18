@@ -1,4 +1,5 @@
-# til
+# TIL
+Today I Learned
 A small collection of technologies and little things that I learn daily.
 
 ---
