@@ -1,13 +1,14 @@
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
 {
-  echo Elevando Previlegios
+  echo "- Elevando Previlegios"
   Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
   exit
 }
+echo "- Previlegios Elevados com sucesso"
 
 # Parametros para o agendador de tarefas.
 # PowerShell.exe
-# -windowstyle hidden C:\Scripts\Automated_Windows_Updates.ps1
+# -windowstyle hidden C:\Scripts\ARQUIVO.ps1
 
 # O Script automaticamente instala atualizações do windows update
 Function InstallWindowsModules
@@ -28,8 +29,8 @@ Function InstallWindowsModules
 
 Function InstallWindowsUpdates
 {
-    # Obtém as atualizações mais recentes do Windows
-    Get-WindowsUpdate | Out-File C:\AutoUpdates\History\Updates_"$((Get-Date).ToString('dd-MM-yyyy_HH.mm.ss'))".txt
+    echo "- Buscando Atualizações"
+    Get-WindowsUpdate -Verbose | Out-File C:\AutoUpdates\History\Updates_"$((Get-Date).ToString('dd-MM-yyyy_HH.mm.ss'))".txt
 
     #Instala atualizações, aceita todas automaticamente e reinicia.
     Install-WindowsUpdate -Install -AcceptAll -AutoReboot
